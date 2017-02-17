@@ -15,32 +15,38 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name: "/>
+
         <EditText
             android:id="@+id/name"
             android:hint="eg Radio"
             android:layout_width="fill_parent"
             android:layout_height="100px"
             android:background="@android:drawable/editbox_background"/>
+
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Price:   "/>
+
         <EditText
             android:id="@+id/price"
             android:hint="eg 1200€"
             android:layout_width="fill_parent"
             android:layout_height="100px"
             android:background="@android:drawable/editbox_background"/>
+
     </LinearLayout>
 
     <Button
