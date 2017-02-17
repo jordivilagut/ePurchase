@@ -31,7 +31,7 @@
         android:text="ADD MORE"/>
 
     <Button
-        android:id="@+id/purchaseBtn"
+        android:id="@+id/checkoutBtn"
         android:layout_width="fill_parent"
         android:layout_height="100px"
         android:text="PURCHASE"/>
