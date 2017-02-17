@@ -12,11 +12,10 @@
     tools:context="com.jordivilagut.epurchase.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/productList"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="200€ mobile
-         1000€ tv
-         7€ wine" />
+        android:text="" />
 
     <TextView
         android:layout_width="wrap_content"

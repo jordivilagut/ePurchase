@@ -1,10 +1,12 @@
 package com.jordivilagut.epurchase;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent goToAddProduct = new Intent(MainActivity.this, AddProduct.class);
-                startActivity(goToAddProduct);
+                startActivityForResult(goToAddProduct, 1);
             }
         });
 
@@ -33,18 +35,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(goToCheckout);
             }
         });
-    }
 
-    public static void main(String[] args) {
-
-        Product p1 = new Product("Mobile", 200);
-        Product p2 = new Product("TV", 1000);
-        Product p3 = new Product("Wine", 7);
+        TextView productList = (TextView) findViewById(R.id.productList);
+        Product mobile = new Product("mobile", 200);
+        Product tv = new Product("tv", 1000);
+        Product wine = new Product("wine", 7);
 
         ShoppingCart cart = new ShoppingCart();
+        cart.addProduct(mobile);
+        cart.addProduct(tv);
+        cart.addProduct(wine);
 
-        cart.addProduct(p1);
-        cart.addProduct(p2);
-        cart.addProduct(p3);
+        StringBuilder builder = new StringBuilder();
+        for (Product product : cart.getProducts()) {
+            builder.append(product.getPrice() + " € " + product.getName() + "\n");
+        }
+
+        productList.setText(builder.toString());
     }
 }
