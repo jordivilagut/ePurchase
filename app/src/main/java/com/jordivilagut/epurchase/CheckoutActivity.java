@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Checkout extends AppCompatActivity {
+public class CheckoutActivity extends AppCompatActivity {
 
     Button checkout;
 
@@ -19,7 +19,7 @@ public class Checkout extends AppCompatActivity {
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent checkout = new Intent(Checkout.this, MainActivity.class);
+                Intent checkout = new Intent(CheckoutActivity.this, MainActivity.class);
                 startActivity(checkout);
             }
         });

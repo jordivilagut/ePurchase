@@ -12,39 +12,43 @@ public class MainActivity extends AppCompatActivity {
 
     Button goToAddProduct;
     Button goToCheckout;
+    ShoppingCart cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        goToAddProduct = (Button)findViewById(R.id.addBtn);
+        goToAddProduct = (Button) findViewById(R.id.addBtn);
         goToAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goToAddProduct = new Intent(MainActivity.this, AddProduct.class);
+                Intent goToAddProduct = new Intent(MainActivity.this, AddProductActivity.class);
                 startActivityForResult(goToAddProduct, 1);
             }
         });
 
-        goToCheckout = (Button)findViewById(R.id.checkoutBtn);
+        goToCheckout = (Button) findViewById(R.id.checkoutBtn);
         goToCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goToCheckout = new Intent(MainActivity.this, Checkout.class);
+                Intent goToCheckout = new Intent(MainActivity.this, CheckoutActivity.class);
                 startActivity(goToCheckout);
             }
         });
 
-        TextView productList = (TextView) findViewById(R.id.productList);
-        Product mobile = new Product("mobile", 200);
-        Product tv = new Product("tv", 1000);
-        Product wine = new Product("wine", 7);
+        cart = new ShoppingCart();
 
-        ShoppingCart cart = new ShoppingCart();
-        cart.addProduct(mobile);
-        cart.addProduct(tv);
-        cart.addProduct(wine);
+        cart.addProduct(new Product("mobile", 200));
+        cart.addProduct(new Product("tv", 1000));
+        cart.addProduct(new Product("wine", 7));
+
+        displayProductList(cart);
+    }
+
+    private void displayProductList(ShoppingCart cart) {
+
+        TextView productList = (TextView) findViewById(R.id.productList);
 
         StringBuilder builder = new StringBuilder();
         for (Product product : cart.getProducts()) {
@@ -53,4 +57,22 @@ public class MainActivity extends AppCompatActivity {
 
         productList.setText(builder.toString());
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                String name = data.getStringExtra("name");
+                double price = Double.valueOf(data.getStringExtra("price"));
+                Product newProduct = new Product(name, price);
+                cart.addProduct(newProduct);
+                displayProductList(cart);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
+    }//onActivityResult
 }

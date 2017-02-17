@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class AddProduct extends AppCompatActivity {
+public class AddProductActivity extends AppCompatActivity {
 
     Button addProduct;
 
@@ -20,9 +20,9 @@ public class AddProduct extends AppCompatActivity {
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addProduct = new Intent(AddProduct.this, MainActivity.class);
-                Product duck = new Product("duck", 200);
-                addProduct.putExtra("newProduct", duck);
+                Intent addProduct = new Intent(AddProductActivity.this, MainActivity.class);
+                addProduct.putExtra("name", "snowboard");
+                addProduct.putExtra("price", "300");
                 setResult(Activity.RESULT_OK, addProduct);
                 finish();
             }
