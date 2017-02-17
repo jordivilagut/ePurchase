@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button goToAddProduct;
-    Button goToCheckout;
-    ShoppingCart cart;
+    private Button goToAddProduct;
+    private Button goToCheckout;
+    private ShoppingCart cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent goToCheckout = new Intent(MainActivity.this, CheckoutActivity.class);
-                startActivity(goToCheckout);
+                startActivityForResult(goToCheckout, 2);
             }
         });
 
@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         productList.setText(builder.toString());
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -71,8 +70,18 @@ public class MainActivity extends AppCompatActivity {
                 displayProductList(cart);
             }
             if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
+                //Do nothing
             }
         }
-    }//onActivityResult
+
+        if (requestCode == 2) {
+            if(resultCode == Activity.RESULT_OK){
+                cart.products.clear();
+                displayProductList(cart);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Do nothing
+            }
+        }
+    }
 }

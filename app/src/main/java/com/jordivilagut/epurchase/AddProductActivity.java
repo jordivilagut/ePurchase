@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class AddProductActivity extends AppCompatActivity {
 
@@ -21,10 +22,21 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent addProduct = new Intent(AddProductActivity.this, MainActivity.class);
-                addProduct.putExtra("name", "snowboard");
-                addProduct.putExtra("price", "300");
-                setResult(Activity.RESULT_OK, addProduct);
-                finish();
+
+                EditText fieldName = (EditText) findViewById(R.id.name);
+                String name = fieldName.getText().toString();
+                EditText fieldPrice = (EditText) findViewById(R.id.price);
+                String price = fieldPrice.getText().toString();
+
+                if (name.equals("") || price.equals("")) {
+
+                } else {
+                    addProduct.putExtra("name", name);
+                    addProduct.putExtra("price", price);
+
+                    setResult(Activity.RESULT_OK, addProduct);
+                    finish();
+                }
             }
         });
     }

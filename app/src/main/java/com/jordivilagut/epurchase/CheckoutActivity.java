@@ -1,5 +1,6 @@
 package com.jordivilagut.epurchase;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +21,8 @@ public class CheckoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent checkout = new Intent(CheckoutActivity.this, MainActivity.class);
-                startActivity(checkout);
+                setResult(Activity.RESULT_OK, checkout);
+                finish();
             }
         });
     }
