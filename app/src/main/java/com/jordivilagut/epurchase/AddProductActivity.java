@@ -25,19 +25,25 @@ public class AddProductActivity extends AppCompatActivity {
 
                 EditText fieldName = (EditText) findViewById(R.id.name);
                 EditText fieldPrice = (EditText) findViewById(R.id.price);
-                String name = fieldName.getText().toString();
-                String price = fieldPrice.getText().toString();
 
+                if(isValid(fieldName) && isValid(fieldPrice)) {
+                    String name = fieldName.getText().toString();
+                    double price = Double.valueOf(fieldPrice.getText().toString());
+                    Product product = new Product(name, price);
 
-                if (name.equals("") || price.equals("")) {
-
-                } else {
-                    Product product = new Product(name, Double.valueOf(price));
                     addProduct.putExtra("product", product);
                     setResult(Activity.RESULT_OK, addProduct);
                     finish();
                 }
             }
         });
+    }
+
+    private boolean isValid(EditText field) {
+        if(field.getText().toString().equals("")) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

@@ -45,7 +45,8 @@
             android:hint="eg 1200€"
             android:layout_width="fill_parent"
             android:layout_height="100px"
-            android:background="@android:drawable/editbox_background"/>
+            android:background="@android:drawable/editbox_background"
+            android:inputType="numberDecimal"/>
 
     </LinearLayout>
 
