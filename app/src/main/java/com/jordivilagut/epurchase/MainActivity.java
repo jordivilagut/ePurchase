@@ -58,13 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private void displayProductList(ShoppingCart cart) {
 
         TextView productList = (TextView) findViewById(R.id.productList);
-
-        StringBuilder builder = new StringBuilder();
-        for (Product product : cart.getProducts()) {
-            builder.append(product.getPrice() + " € " + product.getName() + "\n");
-        }
-
-        productList.setText(builder.toString());
+        productList.setText(cart.toString());
     }
 
     private void displayCartPrice(ShoppingCart cart) {
@@ -87,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == 2) {
             if(resultCode == Activity.RESULT_OK){
-                cart.products.clear();
+                cart.clearBasket();
                 displayProductList(cart);
                 displayCartPrice(cart);
             }

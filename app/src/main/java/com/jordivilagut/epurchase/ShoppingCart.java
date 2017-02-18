@@ -1,24 +1,36 @@
 package com.jordivilagut.epurchase;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ShoppingCart implements Serializable {
 
-    List<Product> products;
+    private Map<String, Product> products;
 
-    public ShoppingCart() { this.products = new ArrayList<Product>(); }
+    public ShoppingCart() { products = new TreeMap<>(); }
 
-    public void addProduct(Product product) { this.products.add(product); }
+    public void addProduct(Product product) { products.put(product.getName(), product); }
 
-    public List<Product> getProducts() { return products; }
+    public Map<String, Product> getProducts() { return products; }
 
     public double getCartPrice() {
         double cartPrice = 0.0;
-        for(Product product : products) {
-            cartPrice += product.getPrice();
+        for(Map.Entry<String, Product> product : products.entrySet()) {
+            cartPrice += product.getValue().getPrice();
         }
         return cartPrice;
+    }
+
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (Map.Entry<String, Product> product : products.entrySet()) {
+            builder.append(product.getValue().getPrice() + " € " + product.getValue().getName() + "\n");
+        }
+        return builder.toString();
+    }
+
+    public void clearBasket() {
+        products.clear();
     }
 }
