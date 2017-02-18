@@ -28,7 +28,7 @@ public class AddProductActivity extends AppCompatActivity {
                 EditText fieldName = (EditText) findViewById(R.id.name);
                 EditText fieldPrice = (EditText) findViewById(R.id.price);
 
-                if(isValid(fieldName) && isNumeric(fieldPrice)) {
+                if(isWord(fieldName) && isNumeric(fieldPrice)) {
                     String name = fieldName.getText().toString();
                     double price = Double.valueOf(fieldPrice.getText().toString());
                     Product product = new Product(name, price);
@@ -44,16 +44,22 @@ public class AddProductActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isValid(EditText field) {
-        if(field.getText().toString().equals("")) {
-            return false;
-        } else {
+    private boolean isWord(EditText field) {
+        String word = "^[a-zA-Z]+$";
+        String text = field.getText().toString();
+
+        if(text.matches(word)) {
             return true;
+        } else {
+            return false;
         }
     }
 
     private boolean isNumeric(EditText field) {
-        if(field.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+        String numeric = "\\d+(?:\\.\\d+)?";
+        String text = field.getText().toString();
+
+        if(field.getText().toString().matches(numeric)) {
             return true;
         } else {
             return false;
