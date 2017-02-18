@@ -1,7 +1,9 @@
 package com.jordivilagut.epurchase;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +36,9 @@ public class AddProductActivity extends AppCompatActivity {
                     addProduct.putExtra("product", product);
                     setResult(Activity.RESULT_OK, addProduct);
                     finish();
+                } else {
+                    AlertDialog alertDialog = createAlertDialog();
+                    alertDialog.show();
                 }
             }
         });
@@ -45,5 +50,18 @@ public class AddProductActivity extends AppCompatActivity {
         } else {
             return true;
         }
+    }
+
+    private AlertDialog createAlertDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(AddProductActivity.this).create();
+        alertDialog.setTitle("ERROR");
+        alertDialog.setMessage("Please fill out all the fields to register a new product.");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        return alertDialog;
     }
 }

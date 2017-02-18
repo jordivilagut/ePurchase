@@ -12,9 +12,11 @@
     tools:context="com.jordivilagut.epurchase.CheckoutActivity">
 
     <TextView
+        android:id="@+id/cartPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1207€ total"/>
+        android:textStyle="bold"
+        android:text="0€ total"/>
 
     <Button
         android:id="@+id/checkoutBtn"

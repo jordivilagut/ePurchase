@@ -1,7 +1,9 @@
 package com.jordivilagut.epurchase;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,8 +34,14 @@ public class MainActivity extends AppCompatActivity {
         goToCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goToCheckout = new Intent(MainActivity.this, CheckoutActivity.class);
-                startActivityForResult(goToCheckout, 2);
+                if(cart.getProducts().size() > 0) {
+                    Intent goToCheckout = new Intent(MainActivity.this, CheckoutActivity.class);
+                    goToCheckout.putExtra("cart", cart);
+                    startActivityForResult(goToCheckout, 2);
+                } else {
+                    AlertDialog alertDialog = createAlertDialog();
+                    alertDialog.show();
+                }
             }
         });
 
@@ -81,7 +89,21 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode == Activity.RESULT_OK){
                 cart.products.clear();
                 displayProductList(cart);
+                displayCartPrice(cart);
             }
         }
+    }
+
+    private AlertDialog createAlertDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.setTitle("OOPS!");
+        alertDialog.setMessage("You may need to add something to your cart before proceeding to check out!");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        return alertDialog;
     }
 }
