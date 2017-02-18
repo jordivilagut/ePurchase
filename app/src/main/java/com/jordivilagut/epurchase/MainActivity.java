@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         cart.addProduct(new Product("wine", 7));
 
         displayProductList(cart);
+        displayCartPrice(cart);
     }
 
     private void displayProductList(ShoppingCart cart) {
@@ -58,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
         productList.setText(builder.toString());
     }
 
+    private void displayCartPrice(ShoppingCart cart) {
+
+        TextView cartPrice = (TextView) findViewById(R.id.cartPrice);
+        cartPrice.setText(cart.getCartPrice() +" € total");
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -68,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 Product newProduct = new Product(name, price);
                 cart.addProduct(newProduct);
                 displayProductList(cart);
+                displayCartPrice(cart);
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Do nothing
