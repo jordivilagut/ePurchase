@@ -70,15 +70,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
-                String name = data.getStringExtra("name");
-                double price = Double.valueOf(data.getStringExtra("price"));
-                Product newProduct = new Product(name, price);
-                cart.addProduct(newProduct);
+                Product product = (Product) data.getSerializableExtra("product");
+                cart.addProduct(product);
                 displayProductList(cart);
                 displayCartPrice(cart);
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                //Do nothing
             }
         }
 
@@ -86,9 +81,6 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode == Activity.RESULT_OK){
                 cart.products.clear();
                 displayProductList(cart);
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                //Do nothing
             }
         }
     }
