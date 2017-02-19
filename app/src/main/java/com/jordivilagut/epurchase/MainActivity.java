@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         goToAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent goToAddProduct = new Intent(MainActivity.this, AddProductActivity.class);
                 startActivityForResult(goToAddProduct, 1);
             }
@@ -34,25 +36,48 @@ public class MainActivity extends AppCompatActivity {
         goToCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(cart.getProducts().size() > 0) {
+
                     Intent goToCheckout = new Intent(MainActivity.this, CheckoutActivity.class);
                     goToCheckout.putExtra("cart", cart);
                     startActivityForResult(goToCheckout, 2);
+
                 } else {
-                    AlertDialog alertDialog = createAlertDialog();
-                    alertDialog.show();
+
+                    displayAlertDialog();
                 }
             }
         });
 
         cart = new ShoppingCart();
-
-        cart.addProduct(new Product("mobile", 200));
-        cart.addProduct(new Product("tv", 1000));
-        cart.addProduct(new Product("wine", 7));
-
         displayProductList(cart);
         displayCartPrice(cart);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+
+            if(resultCode == Activity.RESULT_OK){
+
+                Product product = (Product) data.getSerializableExtra("product");
+                cart.addProduct(product);
+                displayProductList(cart);
+                displayCartPrice(cart);
+            }
+        }
+
+        if (requestCode == 2) {
+
+            if(resultCode == Activity.RESULT_OK){
+
+                cart.clearBasket();
+                displayProductList(cart);
+                displayCartPrice(cart);
+            }
+        }
     }
 
     private void displayProductList(ShoppingCart cart) {
@@ -63,32 +88,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayCartPrice(ShoppingCart cart) {
 
+        FormattedPrice formattedPrice = new FormattedPrice(cart.getPrice());
+        String price = formattedPrice.toString();
+
         TextView cartPrice = (TextView) findViewById(R.id.cartPrice);
-        cartPrice.setText(cart.getCartPrice() +" € total");
+        cartPrice.setText(price + " € total");
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    private void displayAlertDialog() {
 
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                Product product = (Product) data.getSerializableExtra("product");
-                cart.addProduct(product);
-                displayProductList(cart);
-                displayCartPrice(cart);
-            }
-        }
-
-        if (requestCode == 2) {
-            if(resultCode == Activity.RESULT_OK){
-                cart.clearBasket();
-                displayProductList(cart);
-                displayCartPrice(cart);
-            }
-        }
-    }
-
-    private AlertDialog createAlertDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
         alertDialog.setTitle("OOPS!");
         alertDialog.setMessage("You may need to add something to your cart before proceeding to check out!");
@@ -98,6 +106,6 @@ public class MainActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-        return alertDialog;
+        alertDialog.show();
     }
 }

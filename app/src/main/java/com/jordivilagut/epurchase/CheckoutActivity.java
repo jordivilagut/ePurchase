@@ -16,15 +16,16 @@ public class CheckoutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
         checkout = (Button)findViewById(R.id.checkoutBtn);
         checkout.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                AlertDialog alertDialog = createAlertDialog();
-                alertDialog.show();
+                displayAlertDialog();
             }
         });
 
@@ -34,11 +35,22 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void displayCartPrice(ShoppingCart cart) {
 
+        FormattedPrice formattedPrice = new FormattedPrice(cart.getPrice());
+        String price = formattedPrice.toString();
+
         TextView cartPrice = (TextView) findViewById(R.id.cartPrice);
-        cartPrice.setText(cart.getCartPrice() +" € total");
+        cartPrice.setText(price + " € total");
     }
 
-    private AlertDialog createAlertDialog() {
+    private void finishActivity() {
+
+        Intent checkout = new Intent(CheckoutActivity.this, MainActivity.class);
+        setResult(Activity.RESULT_OK, checkout);
+        finish();
+    }
+
+    private void displayAlertDialog() {
+
         AlertDialog alertDialog = new AlertDialog.Builder(CheckoutActivity.this).create();
         alertDialog.setTitle("TRANSACTION COMPLETED");
         alertDialog.setMessage("Thank you for trusting ePurchase.");
@@ -49,12 +61,6 @@ public class CheckoutActivity extends AppCompatActivity {
                         finishActivity();
                     }
                 });
-        return alertDialog;
-    }
-
-    private void finishActivity() {
-        Intent checkout = new Intent(CheckoutActivity.this, MainActivity.class);
-        setResult(Activity.RESULT_OK, checkout);
-        finish();
+        alertDialog.show();
     }
 }

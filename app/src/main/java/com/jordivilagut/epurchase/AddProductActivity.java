@@ -37,18 +37,17 @@ public class AddProductActivity extends AppCompatActivity {
                     setResult(Activity.RESULT_OK, addProduct);
                     finish();
                 } else {
-                    AlertDialog alertDialog = createAlertDialog();
-                    alertDialog.show();
+                    displayAlertDialog();
                 }
             }
         });
     }
 
     private boolean isWord(EditText field) {
-        String word = "^[a-zA-Z]+$";
+        String wordRegex = "^[a-zA-Z]+$";
         String text = field.getText().toString();
 
-        if(text.matches(word)) {
+        if(text.matches(wordRegex)) {
             return true;
         } else {
             return false;
@@ -56,17 +55,17 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private boolean isNumeric(EditText field) {
-        String numeric = "\\d+(?:\\.\\d+)?";
+        String numericRegex = "\\d+(?:\\.\\d+)?";
         String text = field.getText().toString();
 
-        if(field.getText().toString().matches(numeric)) {
+        if(text.matches(numericRegex)) {
             return true;
         } else {
             return false;
         }
     }
 
-    private AlertDialog createAlertDialog() {
+    private void displayAlertDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(AddProductActivity.this).create();
         alertDialog.setTitle("ERROR");
         alertDialog.setMessage("Please fill out all the fields to register a new product.");
@@ -76,6 +75,6 @@ public class AddProductActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-        return alertDialog;
+        alertDialog.show();
     }
 }
