@@ -35,8 +35,7 @@ public class ShoppingCart implements Serializable {
         for (Map.Entry<String, Product> product : products.entrySet()) {
 
             String name = product.getValue().getName();
-            FormattedPrice formattedPrice = new FormattedPrice(product.getValue().getPrice());
-            String price = formattedPrice.toString();
+            String price = FormatUtil.getIndentedPrice(product.getValue().getPrice());
 
             builder.append(price + " € " + name + "\n");
         }

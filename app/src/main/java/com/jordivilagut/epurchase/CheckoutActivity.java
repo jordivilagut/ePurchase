@@ -35,9 +35,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void displayCartPrice(ShoppingCart cart) {
 
-        FormattedPrice formattedPrice = new FormattedPrice(cart.getPrice());
-        String price = formattedPrice.toString();
-
+        String price = FormatUtil.getIndentedPrice(cart.getPrice());
         TextView cartPrice = (TextView) findViewById(R.id.cartPrice);
         cartPrice.setText(price + " € total");
     }
