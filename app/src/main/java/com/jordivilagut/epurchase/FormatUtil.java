@@ -12,7 +12,7 @@ public class FormatUtil {
         int maxPricePositions = 14;
         int emptyPositions = maxPricePositions - formattedPrice.length();
         String indent = "";
-        String figureSpace = "\u2007";
+        final String figureSpace = "\u2007";
 
         for (int i = 0; i < emptyPositions ; i++) {
             indent += figureSpace;

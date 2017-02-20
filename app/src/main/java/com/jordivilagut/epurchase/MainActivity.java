@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,13 +23,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        TextView productList = (TextView) findViewById(R.id.productList);
+        productList.setMovementMethod(new ScrollingMovementMethod());
+
         goToAddProduct = (Button) findViewById(R.id.addBtn);
         goToAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent goToAddProduct = new Intent(MainActivity.this, AddProductActivity.class);
-                startActivityForResult(goToAddProduct, 1);
+                startActivityForResult(goToAddProduct, RequestCodes.START_TO_ADDPRODUCT);
             }
         });
 
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Intent goToCheckout = new Intent(MainActivity.this, CheckoutActivity.class);
                     goToCheckout.putExtra("cart", cart);
-                    startActivityForResult(goToCheckout, 2);
+                    startActivityForResult(goToCheckout, RequestCodes.START_TO_CHECKOUT);
 
                 } else {
 
@@ -52,45 +56,42 @@ public class MainActivity extends AppCompatActivity {
 
         cart = new ShoppingCart();
         displayProductList(cart);
-        displayCartPrice(cart);
+        displayCartPrice(cart.getPrice());
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == 1) {
+        if (requestCode == RequestCodes.START_TO_ADDPRODUCT) {
 
             if(resultCode == Activity.RESULT_OK){
 
                 Product product = (Product) data.getSerializableExtra("product");
                 cart.addProduct(product);
                 displayProductList(cart);
-                displayCartPrice(cart);
+                displayCartPrice(cart.getPrice());
             }
         }
 
-        if (requestCode == 2) {
+        if (requestCode == RequestCodes.START_TO_CHECKOUT) {
 
             if(resultCode == Activity.RESULT_OK){
 
                 cart.clearBasket();
                 displayProductList(cart);
-                displayCartPrice(cart);
+                displayCartPrice(cart.getPrice());
             }
         }
     }
 
     private void displayProductList(ShoppingCart cart) {
-
         TextView productList = (TextView) findViewById(R.id.productList);
         productList.setText(cart.toString());
     }
 
-    private void displayCartPrice(ShoppingCart cart) {
-
-        String price = FormatUtil.getIndentedPrice(cart.getPrice());
+    private void displayCartPrice(double price) {
         TextView cartPrice = (TextView) findViewById(R.id.cartPrice);
-        cartPrice.setText(price + " € total");
+        cartPrice.setText(FormatUtil.getIndentedPrice(price) + " € total");
     }
 
     private void displayAlertDialog() {
